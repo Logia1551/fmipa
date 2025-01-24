@@ -101,7 +101,7 @@ const HomePage = () => {
             transition={{ duration: 0.6 }}
             className="md:w-1/2 text-center md:text-left"
           >
-            <h1 className="text-4xl font-bold mb-4">Kids Academy</h1>
+            <h1 className="text-4xl font-bold mb-4">Kids</h1>
             <p className="text-xl mb-6">Platform Belajar Interaktif untuk Anak-anak</p>
             <div className="flex justify-center md:justify-start space-x-4">
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
