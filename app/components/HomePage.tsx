@@ -6,6 +6,10 @@ import { ChevronRight, FileText, Globe, Play, Book, Trophy } from 'lucide-react'
 import Link from 'next/link';
 import Image from 'next/image';
 
+// Enhanced color gradient function for dynamic styling
+const generateGradient = (color1: string, color2: string) => 
+  `linear-gradient(45deg, ${color1}, ${color2})`;
+
 // Define a type for section content
 type SectionContent = {
   title: string;
@@ -19,19 +23,21 @@ type Sections = {
 };
 
 const HomePage = () => {
-  // Color Palettes
+  // Enhanced Color Palettes with Gradients
   const colorSchemes = {
     mipa: {
       primary: '#3498DB',
       secondary: '#48D1CC',
       accent: '#2C3E50',
-      background: '#FFFFFF'
+      background: '#FFFFFF',
+      gradient: generateGradient('#3498DB', '#48D1CC')
     },
     budayaPendidikan: {
       primary: '#8E44AD',
       secondary: '#F5D6BA',
       accent: '#7F8C8D',
-      background: '#F5F5F5'
+      background: '#F5F5F5',
+      gradient: generateGradient('#8E44AD', '#F5D6BA')
     }
   };
 
@@ -39,13 +45,20 @@ const HomePage = () => {
 
   // Scroll Animation Variants
   const scrollAnimationVariants = {
-    hidden: { opacity: 0, y: 50 },
+    hidden: { 
+      opacity: 0, 
+      y: 50,
+      scale: 0.95 
+    },
     visible: { 
       opacity: 1, 
       y: 0,
+      scale: 1,
       transition: { 
-        duration: 0.6,
-        ease: "easeOut"
+        type: 'spring',
+        stiffness: 120,
+        damping: 10,
+        duration: 0.6
       }
     }
   };
@@ -59,7 +72,15 @@ const HomePage = () => {
         'Dirancang sesuai kurikulum pendidikan terkini',
         'Tersedia dalam berbagai mata pelajaran'
       ],
-      icon: <FileText className="w-16 h-16" style={{color: colorSchemes.mipa.primary}} />
+      icon: <FileText 
+        className="w-24 h-24 drop-shadow-lg hover:rotate-12 transition-transform" 
+        style={{
+          color: colorSchemes.mipa.primary,
+          background: `radial-gradient(circle, ${colorSchemes.mipa.secondary}40, transparent 70%)`,
+          borderRadius: '50%',
+          padding: '20px'
+        }} 
+      />
     },
     budaya: {
       title: 'Penjelasan Budaya',
@@ -69,23 +90,49 @@ const HomePage = () => {
         'Memahami keragaman dan kearifan lokal',
         'Pengalaman belajar yang menginspirasi'
       ],
-      icon: <Globe className="w-16 h-16" style={{color: colorSchemes.budayaPendidikan.primary}} />
+      icon: <Globe 
+        className="w-24 h-24 drop-shadow-lg hover:rotate-6 transition-transform" 
+        style={{
+          color: colorSchemes.budayaPendidikan.primary,
+          background: `radial-gradient(circle, ${colorSchemes.budayaPendidikan.secondary}40, transparent 70%)`,
+          borderRadius: '50%',
+          padding: '20px'
+        }} 
+      />
     }
   };
 
   const features = [
     {
-      icon: <Play className="w-12 h-12" style={{color: colorSchemes.mipa.primary}} />,
+      icon: <Play 
+        className="w-16 h-16 transition-all hover:scale-110" 
+        style={{
+          color: colorSchemes.mipa.primary,
+          filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.2))'
+        }} 
+      />,
       title: 'Video Interaktif',
       description: 'Pelajaran menarik dengan video animasi'
     },
     {
-      icon: <Book className="w-12 h-12" style={{color: colorSchemes.mipa.secondary}} />,
+      icon: <Book 
+        className="w-16 h-16 transition-all hover:scale-110" 
+        style={{
+          color: colorSchemes.mipa.secondary,
+          filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.2))'
+        }} 
+      />,
       title: 'Modul Belajar',
       description: 'Materi lengkap dan terstruktur'
     },
     {
-      icon: <Trophy className="w-12 h-12" style={{color: colorSchemes.budayaPendidikan.primary}} />,
+      icon: <Trophy 
+        className="w-16 h-16 transition-all hover:scale-110" 
+        style={{
+          color: colorSchemes.budayaPendidikan.primary,
+          filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.2))'
+        }} 
+      />,
       title: 'Tantangan Belajar',
       description: 'Kuis dan permainan edukatif'
     }
@@ -95,9 +142,15 @@ const HomePage = () => {
     <motion.div 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
+      transition={{ 
+        duration: 0.5, 
+        type: 'tween' 
+      }}
       className="min-h-screen"
-      style={{ backgroundColor: colorSchemes.mipa.background }}
+      style={{ 
+        backgroundColor: colorSchemes.mipa.background,
+        backgroundImage: `radial-gradient(circle at top left, ${colorSchemes.mipa.secondary}20, transparent 50%)` 
+      }}
     >
       {/* Header */}
       <motion.header 
