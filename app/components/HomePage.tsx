@@ -1,5 +1,3 @@
-{/* Full code from the previous submission */}
-
 "use client";
 
 import React, { useState, useEffect } from 'react';
