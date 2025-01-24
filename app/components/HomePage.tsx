@@ -468,68 +468,73 @@ const HomePage = () => {
           </motion.div>
         )}
 
-        {/* Budaya Section Modifications */}
-        {activeSection === 'budaya' && (
+        {/* Replace the existing Budaya section rendering with this */}
+{activeSection === 'budaya' && (
+  <motion.div 
+    className="grid md:grid-cols-2 gap-8 items-center"
+    style={{ 
+      background: sections[activeSection].backgroundGradient,
+      borderRadius: '20px',
+      padding: '30px'
+    }}
+  >
+    {/* Image Gallery */}
+    <div className="space-y-6">
+      {budayaTraditions.map((tradition, index) => (
+        <motion.div 
+          key={index}
+          whileHover={{ scale: 1.05 }}
+          className="rounded-xl overflow-hidden shadow-lg"
+        >
+          <Image 
+            src={tradition.image} 
+            alt={tradition.title} 
+            width={600} 
+            height={400} 
+            className="object-cover w-full h-64"
+          />
+        </motion.div>
+      ))}
+    </div>
+
+    {/* Tradition Descriptions */}
+    <div>
+      <h2 
+        className="text-3xl font-bold mb-6"
+        style={{ color: colorSchemes.budayaPendidikan.accent }}
+      >
+        {sections[activeSection].title}
+      </h2>
+      
+      <div className="space-y-6">
+        {budayaTraditions.map((tradition, index) => (
           <motion.div 
-            className="grid md:grid-cols-2 gap-8 items-center"
-            style={{ 
-              background: sections[activeSection].backgroundGradient,
-              borderRadius: '20px',
-              padding: '30px'
+            key={index} 
+            whileHover={{ scale: 1.02 }}
+            className="p-6 rounded-xl transition-all"
+            style={{
+              backgroundColor: 'white',
+              boxShadow: '0 4px 6px rgba(142, 68, 173, 0.1)',
+              borderLeft: `5px solid ${colorSchemes.budayaPendidikan.primary}`
             }}
           >
-            {/* Image Gallery */}
-            <div className="space-y-6">
-              {budayaTraditions.map((tradition, index) => (
-                <motion.div 
-                  key={index}
-                  whileHover={{ scale: 1.05 }}
-                  className="rounded-xl overflow-hidden shadow-lg"
-                >
-                  <Image 
-                    src={tradition.image} 
-                    alt={tradition.title} 
-                    width={600} 
-                    height={400} 
-                    className="object-cover w-full h-64"
-                  />
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Tradition Descriptions */}
-            <div>
-              <h2 
-                className="text-3xl font-bold mb-6"
-                style={{ color: colorSchemes.budayaPendidikan.accent }}
-              >
-                {sections[activeSection].title}
-              </h2>
-              
-              {budayaTraditions.map((tradition, index) => (
-                <motion.div 
-                  key={index} 
-                  className="mb-6 p-4 rounded-lg transition-all"
-                  whileHover={{ 
-                    backgroundColor: 'rgba(142, 68, 173, 0.1)'
-                  }}
-                >
-                  <h3 
-                    className="text-xl font-semibold mb-2"
-                    style={{ color: colorSchemes.budayaPendidikan.primary }}
-                  >
-                    {tradition.title}
-                  </h3>
-                  <p 
-                    className="text-base"
-                    style={{ color: colorSchemes.budayaPendidikan.accent }}
-                  >
-                    {tradition.description}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
+            <h3 
+              className="text-xl font-bold mb-3"
+              style={{ color: colorSchemes.budayaPendidikan.primary }}
+            >
+              {tradition.title}
+            </h3>
+            <p 
+              className="text-base"
+              style={{ color: colorSchemes.budayaPendidikan.accent }}
+            >
+              {tradition.description}
+            </p>
           </motion.div>
+        ))}
+      </div>
+    </div>
+  </motion.div>
         )}
       </motion.section>
 
