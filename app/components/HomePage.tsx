@@ -494,34 +494,6 @@ const HomePage = () => {
         </motion.div>
       </motion.section>
 
-      {/* Call to Action */}
-      <motion.section 
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
-        style={{ 
-          background: `linear-gradient(to right, ${colorSchemes.mipa.primary}, ${colorSchemes.budayaPendidikan.primary})`,
-          color: 'white'
-        }}
-        className="py-16"
-      >
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-6">Mulai Perjalanan Belajar Anda Hari Ini!</h2>
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-            <Link 
-              href="/daftar" 
-              className="px-8 py-4 rounded-full text-lg font-semibold transition inline-flex items-center"
-              style={{
-                backgroundColor: colorSchemes.mipa.background,
-                color: colorSchemes.mipa.primary
-              }}
-            >
-              Daftar Sekarang <ChevronRight className="ml-2" />
-            </Link>
-          </motion.div>
-        </div>
-      </motion.section>
-
       {/* Footer */}
       <footer 
         className="py-12"
