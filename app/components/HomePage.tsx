@@ -1,4 +1,7 @@
 {/* Full code from the previous submission */}
+
+"use client";
+
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight, FileText, Globe, Play, Book, Trophy, Snowflake, Star, BookOpen, Palette } from 'lucide-react';
