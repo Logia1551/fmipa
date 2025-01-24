@@ -18,8 +18,8 @@ const Header = () => {
           <Image
             src="/logo.png" // Replace with your logo image path or URL
             alt="Kids Academy"
-            width={10} // Adjust the width as needed
-            height={10} // Adjust the height as needed
+            width={50} // Adjust the width as needed
+            height={50} // Adjust the height as needed
             className="h-auto" // Maintain aspect ratio
           />
         </Link>
