@@ -24,7 +24,7 @@ type Sections = {
   [key in 'lkpd' | 'budaya']: SectionContent;
 };
 
-// Snowflake Particle Component
+// Enhanced Snowflake Component
 const SnowflakeParticle = ({ x, y, size, delay, duration }: { 
   x: number, 
   y: number, 
@@ -249,6 +249,7 @@ const HomePage = () => {
     }
   ];
 
+  // Budaya Traditions Data
   const budayaTraditions = [
     {
       title: 'Meamuk-amukan',
@@ -266,6 +267,7 @@ const HomePage = () => {
       image: '/mageret.jpg'
     }
   ];
+
 
   return (
     <motion.div 
@@ -304,134 +306,308 @@ const HomePage = () => {
         {isSnowEnabled && <SnowBackground />}
       </AnimatePresence>
 
-      {/* [Rest of the component remains the same as in previous submission] */}
-      {activeSection === 'budaya' && (
-        <motion.div 
-          key="budaya-section"
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-          className="space-y-8"
-          style={{ 
-            background: sections[activeSection].backgroundGradient,
-            borderRadius: '20px',
-            padding: '30px'
-          }}
-        >
-          {/* Title with solid background */}
-          <div className="text-center mb-8">
-            <h2 
-              className="text-3xl font-bold py-4"
-              style={{ 
-                backgroundColor: colorSchemes.budayaPendidikan.primary,
-                color: 'white',
-                borderRadius: '10px'
-              }}
+      {/* Header */}
+      <motion.header 
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8, type: "spring" }}
+        style={{ 
+          background: `linear-gradient(to right, ${colorSchemes.mipa.primary}, ${colorSchemes.budayaPendidikan.primary})`,
+          color: 'white' 
+        }}
+        className="py-16"
+      >
+        <div className="container mx-auto px-4 flex flex-col md:flex-row items-center">
+          <motion.div 
+            initial={{ x: 100, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.6 }}
+            className="md:w-1/2 text-center md:text-left"
+          >
+            <h1 className="text-4xl font-bold mb-4">Kids Academy</h1>
+            <p className="text-xl mb-6">Platform Belajar Interaktif untuk Anak-anak</p>
+            <div className="flex justify-center md:justify-start space-x-4">
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Link 
+                  href="/daftar" 
+                  className="px-6 py-3 rounded-full font-semibold transition"
+                  style={{
+                    backgroundColor: colorSchemes.mipa.background,
+                    color: colorSchemes.mipa.primary,
+                    boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
+                  }}
+                >
+                  Daftar Sekarang
+                </Link>
+              </motion.div>
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Link 
+                  href="/coba-gratis" 
+                  className="border-2 px-6 py-3 rounded-full transition"
+                  style={{
+                    borderColor: colorSchemes.mipa.background,
+                    color: colorSchemes.mipa.background
+                  }}
+                >
+                  Coba Gratis
+                </Link>
+              </motion.div>
+            </div>
+          </motion.div>
+          <motion.div 
+            initial={{ x: -100, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.6 }}
+            className="md:w-1/2 mt-8 md:mt-0 flex justify-center"
+          >
+            <motion.div 
+              whileHover={{ scale: 1.05, rotate: 2 }}
+              whileTap={{ scale: 0.95 }}
             >
-              {sections[activeSection].title}
-            </h2>
-          </div>
+              <Image 
+                src="/open.png" 
+                alt="Kids Learning" 
+                width={500} 
+                height={400} 
+                className="rounded-xl shadow-2xl"
+              />
+            </motion.div>
+          </motion.div>
+        </div>
+      </motion.header>
 
-          {/* Tradition Boxes */}
-          <div className="grid md:grid-cols-2 gap-8">
-            {budayaTraditions.map((tradition, index) => (
-              <motion.div 
-                key={index}
-                whileHover={{ scale: 1.02 }}
-                className="grid grid-cols-2 gap-4 p-6 rounded-xl"
-                style={{
-                  backgroundColor: 'white',
-                  boxShadow: '0 4px 6px rgba(142, 68, 173, 0.1)',
-                  borderLeft: `5px solid ${colorSchemes.budayaPendidikan.primary}`
+      {/* Main Content Section */}
+      <motion.section 
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="container mx-auto px-4 py-16"
+      >
+        <div className="flex justify-center mb-8">
+          <div className="inline-flex rounded-lg overflow-hidden shadow-md">
+            <button 
+              onClick={() => setActiveSection('lkpd')}
+              className={`px-6 py-3 transition ${
+                activeSection === 'lkpd' 
+                  ? `bg-blue-500 text-white` 
+                  : 'bg-white text-gray-700'
+              }`}
+            >
+              LKPD
+            </button>
+            <button 
+              onClick={() => setActiveSection('budaya')}
+              className={`px-6 py-3 transition ${
+                activeSection === 'budaya' 
+                  ? `bg-purple-500 text-white` 
+                  : 'bg-white text-gray-700'
+              }`}
+            >
+              Budaya
+            </button>
+          </div>
+        </div>
+
+        {/* Content Display */}
+        {activeSection === 'lkpd' && (
+          <motion.div 
+            key={activeSection}
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+            className="grid md:grid-cols-2 gap-8 items-center"
+            style={{ 
+              background: sections[activeSection].backgroundGradient,
+              borderRadius: '20px',
+              padding: '30px'
+            }}
+          >
+            <div className="flex flex-col items-center space-y-6">
+              {sections[activeSection].icon}
+              <div className="grid grid-cols-2 gap-4 w-full">
+                {sections[activeSection].detailList.map((detail, index) => (
+                  <motion.div 
+                    key={index}
+                    whileHover={{ scale: 1.05 }}
+                    className="bg-white p-4 rounded-xl shadow-md text-center"
+                  >
+                    <div className="flex justify-center mb-3">{detail.icon}</div>
+                    <h4 className="font-semibold">{detail.title}</h4>
+                    <p className="text-sm text-gray-600">{detail.description}</p>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+            <div>
+              <h2 
+                className="text-3xl font-bold mb-6"
+                style={{ color: colorSchemes.mipa.accent }}
+              >
+                {sections[activeSection].title}
+              </h2>
+              <ul className="space-y-4">
+                {sections[activeSection].content.map((item: string, index: number) => (
+                  <motion.li 
+                    key={index} 
+                    className="flex items-center p-3 rounded-lg transition-all"
+                    whileHover={{ 
+                      scale: 1.02, 
+                      backgroundColor: 'rgba(52, 152, 219, 0.1)'
+                    }}
+                    style={{ color: colorSchemes.mipa.accent }}
+                  >
+                    <ChevronRight 
+                      className="mr-3" 
+                      style={{ color: colorSchemes.mipa.primary }} 
+                    />
+                    {item}
+                  </motion.li>
+                ))}
+              </ul>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Replace the existing Budaya section rendering with this */}
+        {activeSection === 'budaya' && (
+          <motion.div 
+            key="budaya-section"
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+            className="space-y-8"
+            style={{ 
+              background: sections[activeSection].backgroundGradient,
+              borderRadius: '20px',
+              padding: '30px'
+            }}
+          >
+            {/* Title with solid background */}
+            <div className="text-center mb-8">
+              <h2 
+                className="text-3xl font-bold py-4"
+                style={{ 
+                  backgroundColor: colorSchemes.budayaPendidikan.primary,
+                  color: 'white',
+                  borderRadius: '10px'
                 }}
               >
-                {/* Image */}
-                <motion.div 
-                  whileHover={{ scale: 1.05 }}
-                  className="rounded-xl overflow-hidden"
-                >
-                  <Image 
-                    src={tradition.image} 
-                    alt={tradition.title} 
-                    width={400} 
-                    height={400} 
-                    className="object-cover w-full h-full aspect-square"
-                  />
-                </motion.div>
-
-                {/* Description */}
-                <div className="flex flex-col justify-center pl-4">
-                  <h3 
-                    className="text-xl font-bold mb-3"
-                    style={{ color: colorSchemes.budayaPendidikan.primary }}
-                  >
-                    {tradition.title}
-                  </h3>
-                  <p 
-                    className="text-base"
-                    style={{ color: colorSchemes.budayaPendidikan.accent }}
-                  >
-                    {tradition.description}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+                {sections[activeSection].title}
+              </h2>
+            </div>
+            
+    {/* Image Gallery */}
+    <div className="space-y-6">
+      {budayaTraditions.map((tradition, index) => (
+        <motion.div 
+          key={index}
+          whileHover={{ scale: 1.05 }}
+          className="rounded-xl overflow-hidden shadow-lg"
+        >
+          <Image 
+            src={tradition.image} 
+            alt={tradition.title} 
+            width={600} 
+            height={400} 
+            className="object-cover w-full h-64"
+          />
         </motion.div>
-      )}
+      ))}
+    </div>
 
-{/* Features Section */}
-<motion.section 
-  initial="hidden"
-  whileInView="visible"
-  viewport={{ once: true, amount: 0.2 }}
-  style={{ backgroundColor: colorSchemes.budayaPendidikan.background }}
-  className="py-16"
->
-  <motion.h2 
-    variants={scrollAnimationVariants}
-    className="text-3xl font-bold text-center mb-12"
-    style={{ color: colorSchemes.budayaPendidikan.accent }}
-  >
-    Mengapa Pilih Kami?
-  </motion.h2>
-  <motion.div 
-    variants={scrollAnimationVariants}
-    className="container mx-auto px-4 grid md:grid-cols-3 gap-8"
-  >
-    {features.map((feature, index) => (
-      <motion.div 
-        key={index}
-        variants={scrollAnimationVariants}
-        whileHover={{ scale: 1.05 }}
-        style={{
-          backgroundColor: colorSchemes.budayaPendidikan.secondary,
-          color: colorSchemes.budayaPendidikan.accent
-        }}
-        className="p-8 rounded-xl text-center hover:shadow-xl transition"
+    {/* Tradition Descriptions */}
+    <div>
+      <h2 
+        className="text-3xl font-bold mb-6"
+        style={{ color: colorSchemes.budayaPendidikan.accent }}
       >
-        <div className="flex justify-center mb-6">{feature.icon}</div>
-        <h3 className="text-xl font-semibold mb-4">{feature.title}</h3>
-        <p>{feature.description}</p>
-      </motion.div>
-    ))}
+        {sections[activeSection].title}
+      </h2>
+      
+      <div className="space-y-6">
+        {budayaTraditions.map((tradition, index) => (
+          <motion.div 
+            key={index} 
+            whileHover={{ scale: 1.02 }}
+            className="p-6 rounded-xl transition-all"
+            style={{
+              backgroundColor: 'white',
+              boxShadow: '0 4px 6px rgba(142, 68, 173, 0.1)',
+              borderLeft: `5px solid ${colorSchemes.budayaPendidikan.primary}`
+            }}
+          >
+            <h3 
+              className="text-xl font-bold mb-3"
+              style={{ color: colorSchemes.budayaPendidikan.primary }}
+            >
+              {tradition.title}
+            </h3>
+            <p 
+              className="text-base"
+              style={{ color: colorSchemes.budayaPendidikan.accent }}
+            >
+              {tradition.description}
+            </p>
+          </motion.div>
+        ))}
+      </div>
+    </div>
   </motion.div>
-</motion.section>
+        )}
+      </motion.section>
 
-{/* Footer */}
-<footer 
-  className="py-12"
-  style={{ 
-    backgroundColor: colorSchemes.mipa.accent,
-    color: 'white' 
-  }}
->
-  <div className="container mx-auto px-4 text-center">
-    <p>&copy; 2024 Kids Academy. Hak Cipta Dilindungi.</p>
-  </div>
-</footer>
-</motion.div>
-);
+      {/* Features Section */}
+      <motion.section 
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        style={{ backgroundColor: colorSchemes.budayaPendidikan.background }}
+        className="py-16"
+      >
+        <motion.h2 
+          variants={scrollAnimationVariants}
+          className="text-3xl font-bold text-center mb-12"
+          style={{ color: colorSchemes.budayaPendidikan.accent }}
+        >
+          Mengapa Pilih Kami?
+        </motion.h2>
+        <motion.div 
+          variants={scrollAnimationVariants}
+          className="container mx-auto px-4 grid md:grid-cols-3 gap-8"
+        >
+          {features.map((feature, index) => (
+            <motion.div 
+              key={index}
+              variants={scrollAnimationVariants}
+              whileHover={{ scale: 1.05 }}
+              style={{
+                backgroundColor: colorSchemes.budayaPendidikan.secondary,
+                color: colorSchemes.budayaPendidikan.accent
+              }}
+              className="p-8 rounded-xl text-center hover:shadow-xl transition"
+            >
+              <div className="flex justify-center mb-6">{feature.icon}</div>
+              <h3 className="text-xl font-semibold mb-4">{feature.title}</h3>
+              <p>{feature.description}</p>
+            </motion.div>
+          ))}
+        </motion.div>
+      </motion.section>
+
+      {/* Footer */}
+      <footer 
+        className="py-12"
+        style={{ 
+          backgroundColor: colorSchemes.mipa.accent,
+          color: 'white' 
+        }}
+      >
+        <div className="container mx-auto px-4 text-center">
+          <p>&copy; 2024 Kids Academy. Hak Cipta Dilindungi.</p>
+        </div>
+      </footer>
+    </motion.div>
+  );
 };
 
 export default HomePage;
