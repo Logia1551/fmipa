@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { ChevronRight, FileText, Globe, Play, Book, Trophy } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronRight, FileText, Globe, Play, Book, Trophy, Snowflake, Star, BookOpen, Palette } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -15,11 +15,95 @@ type SectionContent = {
   title: string;
   content: string[];
   icon: React.ReactElement;
+  backgroundGradient: string;
+  detailList: { icon: React.ReactElement; title: string; description: string }[];
 };
 
 // Define a type for sections
 type Sections = {
   [key in 'lkpd' | 'budaya']: SectionContent;
+};
+
+// Enhanced Snowflake Component
+const SnowflakeParticle = ({ x, y, size, delay, duration }: { 
+  x: number, 
+  y: number, 
+  size: number, 
+  delay: number, 
+  duration: number 
+}) => {
+  return (
+    <motion.div
+      initial={{ 
+        y: -50, 
+        x: x,
+        opacity: 0.7,
+        scale: 0.5
+      }}
+      animate={{ 
+        y: window.innerHeight + 50,
+        x: x + (Math.random() * 100 - 50),
+        opacity: [0.7, 0.4, 0],
+        rotate: 360
+      }}
+      transition={{
+        duration: duration,
+        delay: delay,
+        repeat: Infinity,
+        ease: "linear"
+      }}
+      style={{
+        position: 'fixed',
+        zIndex: 50,
+        color: 'rgba(255,255,255,0.8)',
+        pointerEvents: 'none'
+      }}
+    >
+      <Snowflake 
+        size={size} 
+        className="opacity-50" 
+        strokeWidth={1}
+      />
+    </motion.div>
+  );
+};
+
+// Snow Background Component
+const SnowBackground = () => {
+  const [snowflakes, setSnowflakes] = useState<React.ReactNode[]>([]);
+
+  useEffect(() => {
+    const generateSnowflakes = () => {
+      const snowflakeCount = 50;
+      const newSnowflakes = Array.from({ length: snowflakeCount }).map((_, index) => {
+        const x = Math.random() * window.innerWidth;
+        const size = Math.random() * 15 + 5;
+        const delay = Math.random() * 10;
+        const duration = Math.random() * 15 + 10;
+
+        return (
+          <SnowflakeParticle 
+            key={`snowflake-${index}`}
+            x={x}
+            y={0}
+            size={size}
+            delay={delay}
+            duration={duration}
+          />
+        );
+      });
+
+      setSnowflakes(newSnowflakes);
+    };
+
+    generateSnowflakes();
+  }, []);
+
+  return (
+    <div className="fixed inset-0 pointer-events-none z-50">
+      {snowflakes}
+    </div>
+  );
 };
 
 const HomePage = () => {
@@ -42,6 +126,7 @@ const HomePage = () => {
   };
 
   const [activeSection, setActiveSection] = useState<'lkpd' | 'budaya'>('lkpd');
+  const [isSnowEnabled, setIsSnowEnabled] = useState(true);
 
   // Scroll Animation Variants
   const scrollAnimationVariants = {
@@ -80,7 +165,20 @@ const HomePage = () => {
           borderRadius: '50%',
           padding: '20px'
         }} 
-      />
+      />,
+      backgroundGradient: generateGradient('#3498DB20', '#48D1CC20'),
+      detailList: [
+        {
+          icon: <Star className="w-12 h-12 text-blue-500" />,
+          title: 'Materi Berkualitas',
+          description: 'Konten LKPD disusun oleh tim ahli pendidikan'
+        },
+        {
+          icon: <BookOpen className="w-12 h-12 text-green-500" />,
+          title: 'Interaktif',
+          description: 'Desain yang memudahkan siswa belajar mandiri'
+        }
+      ]
     },
     budaya: {
       title: 'Penjelasan Budaya',
@@ -98,7 +196,20 @@ const HomePage = () => {
           borderRadius: '50%',
           padding: '20px'
         }} 
-      />
+      />,
+      backgroundGradient: generateGradient('#8E44AD20', '#F5D6BA20'),
+      detailList: [
+        {
+          icon: <Palette className="w-12 h-12 text-purple-500" />,
+          title: 'Ragam Budaya',
+          description: 'Menyajikan keberagaman budaya Nusantara'
+        },
+        {
+          icon: <Globe className="w-12 h-12 text-indigo-500" />,
+          title: 'Perspektif Global',
+          description: 'Memahami konteks budaya dalam skala global'
+        }
+      ]
     }
   };
 
@@ -142,16 +253,39 @@ const HomePage = () => {
     <motion.div 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ 
-        duration: 0.5, 
-        type: 'tween' 
-      }}
-      className="min-h-screen"
+      transition={{ duration: 0.5 }}
+      className="min-h-screen relative"
       style={{ 
         backgroundColor: colorSchemes.mipa.background,
         backgroundImage: `radial-gradient(circle at top left, ${colorSchemes.mipa.secondary}20, transparent 50%)` 
       }}
     >
+      {/* Snow Toggle Button */}
+      <motion.button
+        onClick={() => setIsSnowEnabled(!isSnowEnabled)}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+        style={{
+          position: 'fixed',
+          top: '20px',
+          right: '20px',
+          zIndex: 100,
+          backgroundColor: 'rgba(255,255,255,0.2)',
+          padding: '10px',
+          borderRadius: '50%'
+        }}
+      >
+        <Snowflake 
+          color={isSnowEnabled ? 'white' : 'gray'} 
+          fill={isSnowEnabled ? 'white' : 'transparent'}
+        />
+      </motion.button>
+
+      {/* Snow Background (Conditionally Rendered) */}
+      <AnimatePresence>
+        {isSnowEnabled && <SnowBackground />}
+      </AnimatePresence>
+
       {/* Header */}
       <motion.header 
         initial={{ y: -100, opacity: 0 }}
@@ -236,7 +370,7 @@ const HomePage = () => {
               onClick={() => setActiveSection('lkpd')}
               className={`px-6 py-3 transition ${
                 activeSection === 'lkpd' 
-                  ? `bg-${colorSchemes.mipa.primary} text-white` 
+                  ? `bg-blue-500 text-white` 
                   : 'bg-white text-gray-700'
               }`}
             >
@@ -246,7 +380,7 @@ const HomePage = () => {
               onClick={() => setActiveSection('budaya')}
               className={`px-6 py-3 transition ${
                 activeSection === 'budaya' 
-                  ? `bg-${colorSchemes.budayaPendidikan.primary} text-white` 
+                  ? `bg-purple-500 text-white` 
                   : 'bg-white text-gray-700'
               }`}
             >
@@ -262,9 +396,27 @@ const HomePage = () => {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
           className="grid md:grid-cols-2 gap-8 items-center"
+          style={{ 
+            background: sections[activeSection].backgroundGradient,
+            borderRadius: '20px',
+            padding: '30px'
+          }}
         >
-          <div className="flex justify-center">
+          <div className="flex flex-col items-center space-y-6">
             {sections[activeSection].icon}
+            <div className="grid grid-cols-2 gap-4 w-full">
+              {sections[activeSection].detailList.map((detail, index) => (
+                <motion.div 
+                  key={index}
+                  whileHover={{ scale: 1.05 }}
+                  className="bg-white p-4 rounded-xl shadow-md text-center"
+                >
+                  <div className="flex justify-center mb-3">{detail.icon}</div>
+                  <h4 className="font-semibold">{detail.title}</h4>
+                  <p className="text-sm text-gray-600">{detail.description}</p>
+                </motion.div>
+              ))}
+            </div>
           </div>
           <div>
             <h2 
@@ -275,23 +427,29 @@ const HomePage = () => {
             >
               {sections[activeSection].title}
             </h2>
-            <ul className="space-y-3">
+            <ul className="space-y-4">
               {sections[activeSection].content.map((item: string, index: number) => (
-                <li 
+                <motion.li 
                   key={index} 
-                  className="flex items-center"
+                  className="flex items-center p-3 rounded-lg transition-all"
+                  whileHover={{ 
+                    scale: 1.02, 
+                    backgroundColor: activeSection === 'lkpd' 
+                      ? 'rgba(52, 152, 219, 0.1)' 
+                      : 'rgba(142, 68, 173, 0.1)'
+                  }}
                   style={{ color: activeSection === 'lkpd' 
                     ? colorSchemes.mipa.accent 
                     : colorSchemes.budayaPendidikan.accent }}
                 >
                   <ChevronRight 
-                    className="mr-2" 
+                    className="mr-3" 
                     style={{ color: activeSection === 'lkpd' 
                       ? colorSchemes.mipa.primary 
                       : colorSchemes.budayaPendidikan.primary }} 
                   />
                   {item}
-                </li>
+                </motion.li>
               ))}
             </ul>
           </div>
