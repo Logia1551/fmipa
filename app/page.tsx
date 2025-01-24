@@ -1,101 +1,239 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import React from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { motion } from 'framer-motion';
+import { ChevronRight, Play, Book, Trophy } from 'lucide-react';
+
+const HomePage = () => {
+  const categories = [
+    {
+      id: 1,
+      title: 'Matematika',
+      icon: '➕',
+      color: 'bg-blue-500',
+      courses: 12
+    },
+    {
+      id: 2,
+      title: 'Sains',
+      icon: '🔬',
+      color: 'bg-green-500',
+      courses: 8
+    },
+    {
+      id: 3,
+      title: 'Bahasa',
+      icon: '🗣️',
+      color: 'bg-purple-500',
+      courses: 15
+    },
+    {
+      id: 4,
+      title: 'Budaya',
+      icon: '🏺',
+      color: 'bg-orange-500',
+      courses: 10
+    }
+  ];
+
+  const features = [
+    {
+      icon: <Play className="w-12 h-12 text-blue-600" />,
+      title: 'Video Interaktif',
+      description: 'Pelajaran menarik dengan video animasi'
+    },
+    {
+      icon: <Book className="w-12 h-12 text-green-600" />,
+      title: 'Modul Belajar',
+      description: 'Materi lengkap dan terstruktur'
+    },
+    {
+      icon: <Trophy className="w-12 h-12 text-yellow-600" />,
+      title: 'Tantangan Belajar',
+      description: 'Kuis dan permainan edukatif'
+    }
+  ];
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1,
+      transition: { 
+        staggerChildren: 0.1,
+        delayChildren: 0.2 
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 50, opacity: 0 },
+    visible: { 
+      y: 0, 
+      opacity: 1,
+      transition: { 
+        type: "spring",
+        stiffness: 300,
+        damping: 24
+      }
+    }
+  };
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="min-h-screen bg-gray-50"
+    >
+      {/* Animated Header */}
+      <motion.header 
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8, type: "spring" }}
+        className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-16"
+      >
+        <div className="container mx-auto px-4 flex flex-col md:flex-row items-center">
+          <motion.div 
+            initial={{ x: -100, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.6 }}
+            className="md:w-1/2 text-center md:text-left"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            <h1 className="text-4xl font-bold mb-4">Kids Academy</h1>
+            <p className="text-xl mb-6">Platform Belajar Interaktif untuk Anak-anak</p>
+            <div className="flex justify-center md:justify-start space-x-4">
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Link href="/daftar" className="bg-white text-blue-600 px-6 py-3 rounded-full font-semibold hover:bg-blue-100 transition">
+                  Daftar Sekarang
+                </Link>
+              </motion.div>
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Link href="/coba-gratis" className="border-2 border-white text-white px-6 py-3 rounded-full hover:bg-white hover:text-blue-600 transition">
+                  Coba Gratis
+                </Link>
+              </motion.div>
+            </div>
+          </motion.div>
+          <motion.div 
+            initial={{ x: 100, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.6 }}
+            className="md:w-1/2 mt-8 md:mt-0 flex justify-center"
           >
-            Read our docs
-          </a>
+            <motion.div 
+              whileHover={{ scale: 1.05, rotate: 2 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Image 
+                src="/api/placeholder/500/400" 
+                alt="Kids Learning" 
+                width={500} 
+                height={400} 
+                className="rounded-xl shadow-xl"
+              />
+            </motion.div>
+          </motion.div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+      </motion.header>
+
+      {/* Animated Categories */}
+      <motion.section 
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={containerVariants}
+        className="container mx-auto px-4 py-16"
+      >
+        <motion.h2 
+          variants={itemVariants}
+          className="text-3xl font-bold text-center mb-12"
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+          Kategori Pelajaran
+        </motion.h2>
+        <motion.div 
+          variants={containerVariants}
+          className="grid grid-cols-2 md:grid-cols-4 gap-6"
         >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+          {categories.map((category) => (
+            <motion.div 
+              key={category.id}
+              variants={itemVariants}
+              whileHover={{ scale: 1.1 }}
+              className={`${category.color} text-white p-6 rounded-xl text-center transform transition`}
+            >
+              <div className="text-4xl mb-4">{category.icon}</div>
+              <h3 className="text-xl font-semibold">{category.title}</h3>
+              <p>{category.courses} Kursus</p>
+            </motion.div>
+          ))}
+        </motion.div>
+      </motion.section>
+
+      {/* Animated Features */}
+      <motion.section 
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={containerVariants}
+        className="bg-white py-16"
+      >
+        <motion.h2 
+          variants={itemVariants}
+          className="text-3xl font-bold text-center mb-12"
         >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+          Mengapa Pilih Kami?
+        </motion.h2>
+        <motion.div 
+          variants={containerVariants}
+          className="container mx-auto px-4 grid md:grid-cols-3 gap-8"
+        >
+          {features.map((feature, index) => (
+            <motion.div 
+              key={index}
+              variants={itemVariants}
+              whileHover={{ scale: 1.05 }}
+              className="bg-gray-100 p-8 rounded-xl text-center hover:shadow-lg transition"
+            >
+              <div className="flex justify-center mb-6">{feature.icon}</div>
+              <h3 className="text-xl font-semibold mb-4">{feature.title}</h3>
+              <p>{feature.description}</p>
+            </motion.div>
+          ))}
+        </motion.div>
+      </motion.section>
+
+      {/* Animated Call to Action */}
+      <motion.section 
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-16"
+      >
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-3xl font-bold mb-6">Mulai Perjalanan Belajar Anda Hari Ini!</h2>
+          <p className="text-xl mb-8">Bergabunglah dengan ribuan siswa yang sudah memulai</p>
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <Link 
+              href="/daftar" 
+              className="bg-white text-blue-600 px-8 py-4 rounded-full text-lg font-semibold hover:bg-blue-100 transition inline-flex items-center"
+            >
+              Daftar Sekarang <ChevronRight className="ml-2" />
+            </Link>
+          </motion.div>
+        </div>
+      </motion.section>
+
+      {/* Footer */}
+      <footer className="bg-gray-900 text-white py-12">
+        <div className="container mx-auto px-4 text-center">
+          <p>&copy; 2024 Kids Academy. Hak Cipta Dilindungi.</p>
+        </div>
       </footer>
-    </div>
+    </motion.div>
   );
-}
+};
+
+export default HomePage;
