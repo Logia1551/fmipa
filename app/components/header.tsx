@@ -2,6 +2,7 @@
 
 import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 
 const Header = () => {
@@ -12,6 +13,18 @@ const Header = () => {
       transition={{ duration: 0.5 }}
       className="bg-white shadow-md p-4 flex justify-between items-center sticky top-0 z-50"
     >
+      <div className="flex items-center space-x-4">
+        <Link href="/">
+          <Image
+            src="/logo.png" // Replace with your logo image path or URL
+            alt="Kids Academy"
+            width={120} // Adjust the width as needed
+            height={40} // Adjust the height as needed
+            className="h-auto" // Maintain aspect ratio
+          />
+        </Link>
+      </div>
+
       <nav className="flex items-center space-x-8">
         <Link href="/" className="font-medium text-gray-800 hover:text-blue-600 transition-colors">
           Beranda
