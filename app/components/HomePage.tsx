@@ -489,8 +489,8 @@ const HomePage = () => {
           <Image 
             src={tradition.image} 
             alt={tradition.title} 
-            width={300} 
-            height={300} 
+            width={600} 
+            height={400} 
             className="object-cover w-full h-64"
           />
         </motion.div>
