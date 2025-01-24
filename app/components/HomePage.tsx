@@ -345,7 +345,7 @@ const HomePage = () => {
               whileTap={{ scale: 0.95 }}
             >
               <Image 
-                src="/api/placeholder/500/400" 
+                src="/open.png" 
                 alt="Kids Learning" 
                 width={500} 
                 height={400} 
