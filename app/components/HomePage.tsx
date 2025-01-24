@@ -13,28 +13,28 @@ const HomePage = () => {
       id: 1,
       title: 'Matematika',
       icon: '➕',
-      color: 'bg-blue-500', // Tetap biru modern
+      color: 'bg-blue-500',
       courses: 12
     },
     {
       id: 2,
       title: 'Sains',
       icon: '🔬',
-      color: 'bg-teal-500', // Ubah ke teal modern
+      color: 'bg-teal-500',
       courses: 8
     },
     {
       id: 3,
       title: 'Bahasa',
       icon: '🗣️',
-      color: 'bg-purple-500', // Ungu lembut
+      color: 'bg-purple-500',
       courses: 15
     },
     {
       id: 4,
       title: 'Budaya',
       icon: '🏺',
-      color: 'bg-orange-500', // Tetap oranye
+      color: 'bg-orange-500',
       courses: 10
     }
   ];
@@ -46,12 +46,12 @@ const HomePage = () => {
       description: 'Pelajaran menarik dengan video animasi'
     },
     {
-      icon: <Book className="w-12 h-12 text-teal-600" />, // Ubah warna ikon
+      icon: <Book className="w-12 h-12 text-teal-600" />,
       title: 'Modul Belajar',
       description: 'Materi lengkap dan terstruktur'
     },
     {
-      icon: <Trophy className="w-12 h-12 text-purple-600" />, // Ubah warna ikon
+      icon: <Trophy className="w-12 h-12 text-purple-600" />,
       title: 'Tantangan Belajar',
       description: 'Kuis dan permainan edukatif'
     }
