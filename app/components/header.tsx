@@ -1,11 +1,17 @@
 "use client";
 
-import React from 'react'
-import Link from 'next/link'
-import Image from 'next/image'
-import { motion } from 'framer-motion'
+import React from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { motion } from 'framer-motion';
 
 const Header = () => {
+  // Variabel untuk animasi hover pada link navigasi
+  const linkHoverAnimation = {
+    scale: 1.1,
+    color: '#1D4ED8', // Warna biru saat hover
+  };
+
   return (
     <motion.header
       initial={{ opacity: 0, y: -50 }}
@@ -13,34 +19,39 @@ const Header = () => {
       transition={{ duration: 0.5 }}
       className="bg-white shadow-md p-4 flex justify-between items-center sticky top-0 z-50"
     >
+      {/* Logo dan Teks */}
       <div className="flex items-center space-x-4">
         <Link href="/">
-          <Image
-            src="/logo.png" // Replace with your logo image path or URL
-            alt="Kids Academy"
-            width={50} // Adjust the width as needed
-            height={50} // Adjust the height as needed
-            className="h-auto" // Maintain aspect ratio
-          />
+          <a className="flex items-center space-x-2">
+            <Image
+              src="/logo.png" // Ganti dengan path logo Anda
+              alt="Kids Academy"
+              width={50}
+              height={50}
+              className="h-auto"
+            />
+            <span className="text-xl font-bold text-gray-800">Kids Academy</span>
+          </a>
         </Link>
       </div>
 
+      {/* Navigasi */}
       <nav className="flex items-center space-x-8">
-        <Link href="/" className="font-medium text-gray-800 hover:text-blue-600 transition-colors">
-          Beranda
-        </Link>
-        <Link href="/lkpd" className="font-medium text-gray-800 hover:text-blue-600 transition-colors">
-          LKPD
-        </Link>
-        <Link href="/budaya" className="font-medium text-gray-800 hover:text-blue-600 transition-colors">
-          Budaya
-        </Link>
-        <Link href="/about" className="font-medium text-gray-800 hover:text-blue-600 transition-colors">
-          About Us
-        </Link>
+        {['Beranda', 'LKPD', 'Budaya', 'About Us'].map((item, index) => (
+          <Link href={`/${item.toLowerCase().replace(' ', '')}`} key={index}>
+            <a>
+              <motion.span
+                whileHover={linkHoverAnimation}
+                className="font-medium text-gray-800 transition-colors"
+              >
+                {item}
+              </motion.span>
+            </a>
+          </Link>
+        ))}
       </nav>
     </motion.header>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;
