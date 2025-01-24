@@ -181,12 +181,12 @@ const HomePage = () => {
       ]
     },
     budaya: {
-      title: 'Penjelasan Budaya',
+      title: 'Tradisi Budaya Bali',
       content: [
-        'Eksplorasi mendalam tentang warisan budaya Indonesia',
-        'Materi interaktif dan mendalam',
-        'Memahami keragaman dan kearifan lokal',
-        'Pengalaman belajar yang menginspirasi'
+        'Menjelajahi keunikan tradisi masyarakat Bali',
+        'Memahami makna simbolik setiap upacara',
+        'Menghargai kearifan lokal Nusantara',
+        'Pengalaman belajar yang mendalam'
       ],
       icon: <Globe 
         className="w-24 h-24 drop-shadow-lg hover:rotate-6 transition-transform" 
@@ -246,6 +246,25 @@ const HomePage = () => {
       />,
       title: 'Tantangan Belajar',
       description: 'Kuis dan permainan edukatif'
+    }
+  ];
+
+  // Budaya Traditions Data
+  const budayaTraditions = [
+    {
+      title: 'Meamuk-amukan',
+      description: 'Tradisi dari Desa Padangbulia, Sukasada, Buleleng, dilakukan menjelang Hari Raya Nyepi. Tradisi ini melibatkan dua orang yang seolah-olah berkelahi dengan menyemburkan api dari daun kelapa kering yang diikat menyerupai sapu.',
+      image: '/meamuk.jpg'
+    },
+    {
+      title: 'Ayunan Jantra',
+      description: 'Tradisi di Desa Tenganan Pegringsingan, Karangasem, dilakukan setelah Perang Pandan. Ayunan ini melibatkan remaja laki-laki dan perempuan dalam kegiatan simbolik tentang kesiapan menghadapi kehidupan yang beragam.',
+      image: '/jantra.jpg'
+    },
+    {
+      title: 'Mageret Pandan',
+      description: 'Upacara perang pandan yang menggunakan daun pandan berduri sebagai simbol gada. Diadakan di Desa Tenganan pada bulan kelima kalender Bali, melibatkan berbagai generasi dari anak-anak hingga orang tua dalam pertarungan simbolik.',
+      image: '/mageret.jpg'
     }
   ];
 
@@ -390,70 +409,128 @@ const HomePage = () => {
         </div>
 
         {/* Content Display */}
-        <motion.div 
-          key={activeSection}
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-          className="grid md:grid-cols-2 gap-8 items-center"
-          style={{ 
-            background: sections[activeSection].backgroundGradient,
-            borderRadius: '20px',
-            padding: '30px'
-          }}
-        >
-          <div className="flex flex-col items-center space-y-6">
-            {sections[activeSection].icon}
-            <div className="grid grid-cols-2 gap-4 w-full">
-              {sections[activeSection].detailList.map((detail, index) => (
+        {activeSection === 'lkpd' && (
+          <motion.div 
+            key={activeSection}
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+            className="grid md:grid-cols-2 gap-8 items-center"
+            style={{ 
+              background: sections[activeSection].backgroundGradient,
+              borderRadius: '20px',
+              padding: '30px'
+            }}
+          >
+            <div className="flex flex-col items-center space-y-6">
+              {sections[activeSection].icon}
+              <div className="grid grid-cols-2 gap-4 w-full">
+                {sections[activeSection].detailList.map((detail, index) => (
+                  <motion.div 
+                    key={index}
+                    whileHover={{ scale: 1.05 }}
+                    className="bg-white p-4 rounded-xl shadow-md text-center"
+                  >
+                    <div className="flex justify-center mb-3">{detail.icon}</div>
+                    <h4 className="font-semibold">{detail.title}</h4>
+                    <p className="text-sm text-gray-600">{detail.description}</p>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+            <div>
+              <h2 
+                className="text-3xl font-bold mb-6"
+                style={{ color: colorSchemes.mipa.accent }}
+              >
+                {sections[activeSection].title}
+              </h2>
+              <ul className="space-y-4">
+                {sections[activeSection].content.map((item: string, index: number) => (
+                  <motion.li 
+                    key={index} 
+                    className="flex items-center p-3 rounded-lg transition-all"
+                    whileHover={{ 
+                      scale: 1.02, 
+                      backgroundColor: 'rgba(52, 152, 219, 0.1)'
+                    }}
+                    style={{ color: colorSchemes.mipa.accent }}
+                  >
+                    <ChevronRight 
+                      className="mr-3" 
+                      style={{ color: colorSchemes.mipa.primary }} 
+                    />
+                    {item}
+                  </motion.li>
+                ))}
+              </ul>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Budaya Section Modifications */}
+        {activeSection === 'budaya' && (
+          <motion.div 
+            className="grid md:grid-cols-2 gap-8 items-center"
+            style={{ 
+              background: sections[activeSection].backgroundGradient,
+              borderRadius: '20px',
+              padding: '30px'
+            }}
+          >
+            {/* Image Gallery */}
+            <div className="space-y-6">
+              {budayaTraditions.map((tradition, index) => (
                 <motion.div 
                   key={index}
                   whileHover={{ scale: 1.05 }}
-                  className="bg-white p-4 rounded-xl shadow-md text-center"
+                  className="rounded-xl overflow-hidden shadow-lg"
                 >
-                  <div className="flex justify-center mb-3">{detail.icon}</div>
-                  <h4 className="font-semibold">{detail.title}</h4>
-                  <p className="text-sm text-gray-600">{detail.description}</p>
+                  <Image 
+                    src={tradition.image} 
+                    alt={tradition.title} 
+                    width={600} 
+                    height={400} 
+                    className="object-cover w-full h-64"
+                  />
                 </motion.div>
               ))}
             </div>
-          </div>
-          <div>
-            <h2 
-              className="text-3xl font-bold mb-6"
-              style={{ color: activeSection === 'lkpd' 
-                ? colorSchemes.mipa.accent 
-                : colorSchemes.budayaPendidikan.accent }}
-            >
-              {sections[activeSection].title}
-            </h2>
-            <ul className="space-y-4">
-              {sections[activeSection].content.map((item: string, index: number) => (
-                <motion.li 
+
+            {/* Tradition Descriptions */}
+            <div>
+              <h2 
+                className="text-3xl font-bold mb-6"
+                style={{ color: colorSchemes.budayaPendidikan.accent }}
+              >
+                {sections[activeSection].title}
+              </h2>
+              
+              {budayaTraditions.map((tradition, index) => (
+                <motion.div 
                   key={index} 
-                  className="flex items-center p-3 rounded-lg transition-all"
+                  className="mb-6 p-4 rounded-lg transition-all"
                   whileHover={{ 
-                    scale: 1.02, 
-                    backgroundColor: activeSection === 'lkpd' 
-                      ? 'rgba(52, 152, 219, 0.1)' 
-                      : 'rgba(142, 68, 173, 0.1)'
+                    backgroundColor: 'rgba(142, 68, 173, 0.1)'
                   }}
-                  style={{ color: activeSection === 'lkpd' 
-                    ? colorSchemes.mipa.accent 
-                    : colorSchemes.budayaPendidikan.accent }}
                 >
-                  <ChevronRight 
-                    className="mr-3" 
-                    style={{ color: activeSection === 'lkpd' 
-                      ? colorSchemes.mipa.primary 
-                      : colorSchemes.budayaPendidikan.primary }} 
-                  />
-                  {item}
-                </motion.li>
+                  <h3 
+                    className="text-xl font-semibold mb-2"
+                    style={{ color: colorSchemes.budayaPendidikan.primary }}
+                  >
+                    {tradition.title}
+                  </h3>
+                  <p 
+                    className="text-base"
+                    style={{ color: colorSchemes.budayaPendidikan.accent }}
+                  >
+                    {tradition.description}
+                  </p>
+                </motion.div>
               ))}
-            </ul>
-          </div>
-        </motion.div>
+            </div>
+          </motion.div>
+        )}
       </motion.section>
 
       {/* Features Section */}
