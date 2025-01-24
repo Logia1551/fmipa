@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronRight, FileText, Globe } from 'lucide-react';
+import { ChevronRight, FileText, Globe, Play, Book, Trophy } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -37,6 +37,19 @@ const HomePage = () => {
 
   const [activeSection, setActiveSection] = useState<'lkpd' | 'budaya'>('lkpd');
 
+  // Scroll Animation Variants
+  const scrollAnimationVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { 
+        duration: 0.6,
+        ease: "easeOut"
+      }
+    }
+  };
+
   const sections: Sections = {
     lkpd: {
       title: 'Lembar Kerja Peserta Didik (LKPD)',
@@ -60,6 +73,24 @@ const HomePage = () => {
     }
   };
 
+  const features = [
+    {
+      icon: <Play className="w-12 h-12" style={{color: colorSchemes.mipa.primary}} />,
+      title: 'Video Interaktif',
+      description: 'Pelajaran menarik dengan video animasi'
+    },
+    {
+      icon: <Book className="w-12 h-12" style={{color: colorSchemes.mipa.secondary}} />,
+      title: 'Modul Belajar',
+      description: 'Materi lengkap dan terstruktur'
+    },
+    {
+      icon: <Trophy className="w-12 h-12" style={{color: colorSchemes.budayaPendidikan.primary}} />,
+      title: 'Tantangan Belajar',
+      description: 'Kuis dan permainan edukatif'
+    }
+  ];
+
   return (
     <motion.div 
       initial={{ opacity: 0 }}
@@ -79,9 +110,62 @@ const HomePage = () => {
         }}
         className="py-16"
       >
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl font-bold mb-4">Kids Academy</h1>
-          <p className="text-xl mb-6">Platform Belajar Interaktif untuk Anak-anak</p>
+        <div className="container mx-auto px-4 flex flex-col md:flex-row items-center">
+          <motion.div 
+            initial={{ x: 100, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.6 }}
+            className="md:w-1/2 text-center md:text-left"
+          >
+            <h1 className="text-4xl font-bold mb-4">Kids Academy</h1>
+            <p className="text-xl mb-6">Platform Belajar Interaktif untuk Anak-anak</p>
+            <div className="flex justify-center md:justify-start space-x-4">
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Link 
+                  href="/daftar" 
+                  className="px-6 py-3 rounded-full font-semibold transition"
+                  style={{
+                    backgroundColor: colorSchemes.mipa.background,
+                    color: colorSchemes.mipa.primary,
+                    boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
+                  }}
+                >
+                  Daftar Sekarang
+                </Link>
+              </motion.div>
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Link 
+                  href="/coba-gratis" 
+                  className="border-2 px-6 py-3 rounded-full transition"
+                  style={{
+                    borderColor: colorSchemes.mipa.background,
+                    color: colorSchemes.mipa.background
+                  }}
+                >
+                  Coba Gratis
+                </Link>
+              </motion.div>
+            </div>
+          </motion.div>
+          <motion.div 
+            initial={{ x: -100, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.6 }}
+            className="md:w-1/2 mt-8 md:mt-0 flex justify-center"
+          >
+            <motion.div 
+              whileHover={{ scale: 1.05, rotate: 2 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Image 
+                src="/api/placeholder/500/400" 
+                alt="Kids Learning" 
+                width={500} 
+                height={400} 
+                className="rounded-xl shadow-2xl"
+              />
+            </motion.div>
+          </motion.div>
         </div>
       </motion.header>
 
@@ -158,6 +242,44 @@ const HomePage = () => {
               ))}
             </ul>
           </div>
+        </motion.div>
+      </motion.section>
+
+      {/* Features Section */}
+      <motion.section 
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        style={{ backgroundColor: colorSchemes.budayaPendidikan.background }}
+        className="py-16"
+      >
+        <motion.h2 
+          variants={scrollAnimationVariants}
+          className="text-3xl font-bold text-center mb-12"
+          style={{ color: colorSchemes.budayaPendidikan.accent }}
+        >
+          Mengapa Pilih Kami?
+        </motion.h2>
+        <motion.div 
+          variants={scrollAnimationVariants}
+          className="container mx-auto px-4 grid md:grid-cols-3 gap-8"
+        >
+          {features.map((feature, index) => (
+            <motion.div 
+              key={index}
+              variants={scrollAnimationVariants}
+              whileHover={{ scale: 1.05 }}
+              style={{
+                backgroundColor: colorSchemes.budayaPendidikan.secondary,
+                color: colorSchemes.budayaPendidikan.accent
+              }}
+              className="p-8 rounded-xl text-center hover:shadow-xl transition"
+            >
+              <div className="flex justify-center mb-6">{feature.icon}</div>
+              <h3 className="text-xl font-semibold mb-4">{feature.title}</h3>
+              <p>{feature.description}</p>
+            </motion.div>
+          ))}
         </motion.div>
       </motion.section>
 
